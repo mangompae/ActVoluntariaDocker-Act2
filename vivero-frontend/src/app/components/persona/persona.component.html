@@ -1,0 +1,18 @@
+<div>
+    <h2>Registro de Personas</h2>
+    <input [(ngModel)]="nuevaPersona.nombre" placeholder="Nombre">
+    <input [(ngModel)]="nuevaPersona.edad" placeholder="Edad" type="number">
+    <button (click)="addPersona()">Agregar</button>
+  
+    <h3>Lista de Personas</h3>
+    <table>
+      <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+      </tr>
+      <tr *ngFor="let persona of personas">
+        <td>{{ persona.nombre }}</td>
+        <td>{{ persona.edad }}</td>
+      </tr>
+    </table>
+  </div>
