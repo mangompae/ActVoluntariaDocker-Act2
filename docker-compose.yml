@@ -36,7 +36,7 @@ services:
       - "9999:9999"
 
   frontend:
-    build: ./vivero-frontend  # Ruta correcta al frontend
+    build: ./viveroFrontend  # Ruta correcta al frontend
     container_name: angular_vivero
     depends_on:
       - backend
