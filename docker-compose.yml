@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_vivero
+    restart: always
+    environment:
+      MYSQL_DATABASE: vivero
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: usuario
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3309:3306"  # Mapea 3309 en el host a 3306 en el contenedor
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./vivero
+    container_name: spring_vivero
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/vivero?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: usuario
+      SPRING_DATASOURCE_PASSWORD: usuario
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "9999:9999"
+
+  frontend:
+    build: ./vivero-frontend  # Ruta correcta al frontend
+    container_name: angular_vivero
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
+    volumes:
+      - ./vivero-frontend:/app
+    stdin_open: true
+    tty: true
+
+volumes:
+  mysql_data:

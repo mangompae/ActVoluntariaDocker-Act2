@@ -1,0 +1,7 @@
+com\daw\ApplicationLauncher.class
+com\daw\repository\PersonaRepository.class
+com\daw\service\ApplicationService.class
+com\daw\repository\ArbolRepository.class
+com\daw\model\Arbol.class
+com\daw\controller\ApplicationController.class
+com\daw\model\Persona.class
